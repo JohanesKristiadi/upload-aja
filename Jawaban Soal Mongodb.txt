@@ -1,0 +1,56 @@
+Database: ‘awesome-retro’Collection: users, cards
+
+--------------------
+
+Exercise 2
+
+Find cards with nofanto@btpn.com as author
+
+Find cards with raymundus@btpn.com or baskara@btpn.com as likers
+
+Find cards with raymundus@btpn.com as author or liker
+
+Find one card with column that greater than 1 and nofanto@btpn.com as author
+
+
+---------------------------
+
+Find cards with two likers
+
+>> db.cards.find( { likes: { $size: 2 } } );
+
+
+Find cards that don’t have any comment
+
+>> db.cards.find({comments: null})
+>> db.cards.find({comments: {$exists: false}})
+
+Find cards with raymundus@btpn.com as comment author
+
+>> db.cards.find({comments: {$elemMatch: {"author": "raymundus@btpn.com"}}})
+>> db.cards.find({"comments.author":"raymundus@btpn.com"})
+
+Find card with “Yeahhh” as comment and nofanto@btpn.com as comment author
+
+>> db.cards.find({comments: {$elemMatch: {"author": "nofanto@btpn.com","comment": "Yeahhh"}}})
+>> db.cards.find({"comments.author":"nofanto@btpn.com", "comments.comment": "Yeahhh"})
+
+----------------------------------------
+Update first document author (check the _id) to paksi@btpn.com
+>> db.cards.updateOne({"_id": ObjectId("6406cfe90c281c4730960d1a")}, {$set:{author: "paksi@btpn.com"}})
+
+Add 2 likes to paksi@btpn.com card (paksi@btpn.com and dini@btpn.com)
+>> 
+
+Update all cards with nofanto@btpn.com as author to dini@btpn.com
+>> 
+
+Remove all baskara@btpn.com from likers
+>> 
+
+
+Remove documents that don’t have likes
+>> 
+
+
+
