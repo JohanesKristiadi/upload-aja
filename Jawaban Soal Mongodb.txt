@@ -5,13 +5,16 @@ Database: ‘awesome-retro’Collection: users, cards
 Exercise 2
 
 Find cards with nofanto@btpn.com as author
+>db.cards..find({"author" : "nofanto@btpn.com"})
 
 Find cards with raymundus@btpn.com or baskara@btpn.com as likers
+> db.cards.find({"likes":{$in :["raymundus@btpn.com", "baskara@btpn.com"]}})
 
 Find cards with raymundus@btpn.com as author or liker
+> db.cards.find({$or : [{"author" : "raymundus@btpn.com"}, {"likes":{$in :["raymundus@btpn.com"]}}]})
 
 Find one card with column that greater than 1 and nofanto@btpn.com as author
-
+> db.cards.ffind({$and : [{"column" : {$gt:1}}, {"author" : "nofanto@btpn.com"}]})
 
 ---------------------------
 
@@ -40,17 +43,14 @@ Update first document author (check the _id) to paksi@btpn.com
 >> db.cards.updateOne({"_id": ObjectId("6406cfe90c281c4730960d1a")}, {$set:{author: "paksi@btpn.com"}})
 
 Add 2 likes to paksi@btpn.com card (paksi@btpn.com and dini@btpn.com)
->> 
+>> db.cards.updateOne({"author" : "paksi@btpn" },{$push: {likes:{$each :["paksi@btpn.com","dini@btpn.com"]}}})
 
 Update all cards with nofanto@btpn.com as author to dini@btpn.com
->> 
+>> db.cards.updateOne({"author" : "paksi@btpn" },{$push: {likes:{$each :["paksi@btpn.com","dini@btpn.com"]}}})
 
 Remove all baskara@btpn.com from likers
->> 
+>> db.cards.updateMany({}, {$pull: {"likes" :"baskara@btpn.com"}})
 
 
 Remove documents that don’t have likes
->> 
-
-
-
+>> db.cards.deleteMany({likes :{$exists :false}})
